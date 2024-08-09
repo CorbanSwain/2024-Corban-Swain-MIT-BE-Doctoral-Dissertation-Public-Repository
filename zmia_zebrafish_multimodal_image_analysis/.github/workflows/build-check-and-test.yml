@@ -1,0 +1,56 @@
+name: Check Python Syntax and Run Tests (Multi-platform)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-run-tests:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+        python:
+          - "3.10"
+        env-file:
+          - zmia-env-opt3.yaml
+          - zmia-env-opt3-accl.yaml
+          - zmia-env-opt3-with-zebrazoom.yaml
+    name: Test
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+          auto-update-conda: true
+          python-version: ${{ matrix.python-version }}
+    - name: Conda Info
+      shell: bash -el {0}
+      run: conda info --debug
+    - name: Install flake8 dependency
+      shell: bash -el {0}
+      run: |
+        conda install flake8
+    - name: Lint with flake8
+      shell: bash -el {0}
+      run: |
+        # stop the build if there are Python syntax errors      
+        flake8 . -v --count --select=E9,F7 --show-source --statistics
+    - name: Install dependencies from enviornment file
+      shell: bash -el {0}
+      run: |
+        conda env create --file envs/${{ matrix.env-file }} --name test-env
+        conda activate test-env
+    - name: Check for Name and Syntax Errors
+      shell: bash -el {0}
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings.
+        flake8 . --count --exit-zero --max-complexity=10 --statistics
+    - name: Run Test Jobfile Script
+      shell: bash -el {0}
+      run: |
+        python source/jobs/local-and-remote_(no-nb-ref)_envionrment-test.py

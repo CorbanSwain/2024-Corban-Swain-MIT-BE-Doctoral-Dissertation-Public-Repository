@@ -1,0 +1,15 @@
+*.ipynb_checkpoints/
+*.h5
+*.log
+*.idea/*
+*__pycache__*
+*.DS_info
+.vs/
+*/x64/
+etc/pds-to-avi-v0.0.1/packages/
+*/Release/
+*/Debug/
+*.user
+data/atlas_brain_mask.tif
+data/cnmf_results/test_cnmf_results.hdf5
+logs/ft_log.pkl

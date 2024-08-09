@@ -1,0 +1,73 @@
+name: Multi-Platform Check Python Env, Syntax & Run Test Script
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-run-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        env-file:
+          - zmia-env-3.9.yml
+          - zmia-env-with-zebrazoom-3.9.yml
+          - zmia-env-accl-3.9.yml          
+          - zmia-env-accl-with-zebrazoom-3.9.yml
+        conda:
+          - miniforge
+          - default
+          - mamba
+        include:
+          - mamba-version: ""
+          - miniforge-version: ""
+          - miniforge-variant: ""
+          - conda: miniforge
+            miniforge-version: latest
+          - conda: mamba
+            mamba-version: "*"
+            miniforge-variant: mambaforge
+    name: Build & Test
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
+    steps:
+    - name: Checkout Repository and Init Submodules
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Create Python Enviornment from File
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        activate-environment: zmia
+        environment-file: envs/${{ matrix.env-file }}
+        miniforge-version: ${{ matrix.miniforge-version }}
+        miniforge-variant: ${{ matrix.miniforge-variant }}
+        mamba-version: ${{ matrix.mamba-version }}
+        auto-update-conda: true
+        auto-activate-base: false
+    - name: Conda Info
+      shell: bash -el {0}
+      run: conda info --debug
+    - name: Install flake8 Dependency
+      shell: bash -el {0}
+      run: |
+        conda install flake8
+    - name: Lint with flake8
+      shell: bash -el {0}
+      run: |
+        # stop the build if there are Python syntax errors      
+        flake8 . -v --count --select=E9,F7 --show-source --statistics
+    - name: Check for Name and Syntax Errors
+      shell: bash -el {0}
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings.
+        flake8 . --count --exit-zero --max-complexity=10 --statistics
+    - name: Run Test Jobfile Script
+      shell: bash -el {0}
+      run: |
+        python "source/jobs/local-and-remote_(no-nb-ref)_envionrment-test.py"

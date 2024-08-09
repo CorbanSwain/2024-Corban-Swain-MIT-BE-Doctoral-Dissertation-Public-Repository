@@ -1,0 +1,9 @@
+name: zmia-zebrazoom-3.10
+channels:
+  - conda-forge
+  - anaconda
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+    - zebrazoom

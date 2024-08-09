@@ -1,0 +1,15 @@
+1  cd nvme
+    2  gh repo clone CorbanSwain/ZMIA-Zebrafish-Multimodal-Image-Analysis
+    3  git clone https://github.com/CorbanSwain/ZMIA-Zebrafish-Multimodal-Image-Analysis.git
+    4  git submodule init
+    5  cd ZMIA-Zebrafish-Multimodal-Image-Analysis/
+    6  git submodule init
+    7  git submodule update
+    8  conda env create --prefix ./envs/zmia-env --file ./envs/zmia-env.yml
+    9  git checkout -b ANTsPy_RegistrationTestPanos
+   10  git rev-parse --abbrev-ref HEAD
+   11  git add .
+   12  git committ -m "FirstCommitToTestBranching"
+   13  git commit -m "FirstCommitToTestBranching"
+   14  git push
+

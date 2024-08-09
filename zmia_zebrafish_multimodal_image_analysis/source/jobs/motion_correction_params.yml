@@ -1,0 +1,4 @@
+strides: [9, 9]
+overlaps: [9, 9]
+max_shifts: [10, 10]
+max_deviation_rigid: 3

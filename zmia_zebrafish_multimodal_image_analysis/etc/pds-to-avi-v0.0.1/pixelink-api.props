@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_PropertySheetDisplayName>debug_plx-and-cv-apis</_PropertySheetDisplayName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(OPENCV_DIR)\..\..\include;$(PIXELINK_SDK_ROOT)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(OPENCV_DIR)\lib;$(PIXELINK_SDK_ROOT)\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PxLAPI40.lib;opencv_aruco480.lib;opencv_bgsegm480.lib;opencv_bioinspired480.lib;opencv_calib3d480.lib;opencv_ccalib480.lib;opencv_core480.lib;opencv_cudaarithm480.lib;opencv_cudabgsegm480.lib;opencv_cudacodec480.lib;opencv_cudafeatures2d480.lib;opencv_cudafilters480.lib;opencv_cudaimgproc480.lib;opencv_cudalegacy480.lib;opencv_cudaobjdetect480.lib;opencv_cudaoptflow480.lib;opencv_cudastereo480.lib;opencv_cudawarping480.lib;opencv_cudev480.lib;opencv_datasets480.lib;opencv_dnn480.lib;opencv_dnn_objdetect480.lib;opencv_dnn_superres480.lib;opencv_dpm480.lib;opencv_face480.lib;opencv_features2d480.lib;opencv_flann480.lib;opencv_fuzzy480.lib;opencv_gapi480.lib;opencv_hfs480.lib;opencv_highgui480.lib;opencv_imgcodecs480.lib;opencv_imgproc480.lib;opencv_img_hash480.lib;opencv_intensity_transform480.lib;opencv_line_descriptor480.lib;opencv_mcc480.lib;opencv_ml480.lib;opencv_objdetect480.lib;opencv_optflow480.lib;opencv_phase_unwrapping480.lib;opencv_photo480.lib;opencv_plot480.lib;opencv_quality480.lib;opencv_rapid480.lib;opencv_reg480.lib;opencv_rgbd480.lib;opencv_saliency480.lib;opencv_shape480.lib;opencv_stereo480.lib;opencv_stitching480.lib;opencv_structured_light480.lib;opencv_superres480.lib;opencv_surface_matching480.lib;opencv_text480.lib;opencv_tracking480.lib;opencv_video480.lib;opencv_videoio480.lib;opencv_videostab480.lib;opencv_wechat_qrcode480.lib;opencv_xfeatures2d480.lib;opencv_ximgproc480.lib;opencv_xobjdetect480.lib;opencv_xphoto480.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

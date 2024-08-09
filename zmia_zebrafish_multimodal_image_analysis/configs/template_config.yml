@@ -1,0 +1,8 @@
+data_directory: './data'
+log_directory: './logs'
+datasets:
+  - name: 'GCaMP_TZ (512x512)'
+    path: 'test_data/dataset_01'
+
+  - name: 'GCaMP_Z (2048x2048)'
+    path: 'test_data/dataset_02'

@@ -1,0 +1,62 @@
+name: Check Python Env, Syntax & Run Test Script
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-run-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        env-file: [zmia-env-3.9.yml]
+        conda: [mamba]
+        include:
+          - conda: mamba
+            miniforge-version: ""
+            mamba-version: "*"
+            miniforge-variant: mambaforge
+    continue-on-error: true
+    name: Build & Test
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Checkout Repository and Init Submodules
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Create Python Enviornment from File
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        activate-environment: zmia
+        environment-file: envs/${{ matrix.env-file }}
+        miniforge-version: ${{ matrix.miniforge-version }}
+        miniforge-variant: ${{ matrix.miniforge-variant }}
+        mamba-version: ${{ matrix.mamba-version }}
+        auto-update-conda: true
+        auto-activate-base: false
+    - name: Conda Info
+      shell: bash -el {0}
+      run: conda info --debug
+    - name: Install flake8 Dependency
+      shell: bash -el {0}
+      run: |
+        conda install flake8
+    - name: Lint with flake8
+      shell: bash -el {0}
+      run: |
+        # stop the build if there are Python syntax errors      
+        flake8 . -v --count --select=E9,F7 --show-source --statistics
+    - name: Check for Name and Syntax Errors
+      shell: bash -el {0}
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings.
+        flake8 . --count --exit-zero --max-complexity=10 --statistics
+    - name: Run Test Jobfile Script
+      shell: bash -el {0}
+      run: |
+        python "source/jobs/local-and-remote_(no-nb-ref)_envionrment-test.py"

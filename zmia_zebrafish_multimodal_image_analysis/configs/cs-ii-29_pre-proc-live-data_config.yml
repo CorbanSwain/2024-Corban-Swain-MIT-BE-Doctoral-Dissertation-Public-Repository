@@ -1,0 +1,47 @@
+name: 'cs-ii-29_pre-processed-live-data'
+
+# I recommend updating these to absolute paths
+data_directory: '..\cs-ii-29_pre-proc'
+output_directory: '..\data\cs-ii-29_pre-proc-outputs'
+log_directory: '..\logs'
+
+datasets:
+  - name: 'cs-ii-29B_r399_regional-brain-activity-timecourses'
+    experiment: 'cs-ii-29'
+    fish-id: 'B'
+    run: 399
+    type: 'dataframe'
+    source-type: 'two-photon'
+    path: 'cs-ii-29_fish-B_run-399_ca-activity-vs-time-by-region.pkl'
+
+  - name: 'cs-ii-29B_r399_brain-region-properties'
+    experiment: 'cs-ii-29'
+    fish-id: 'B'
+    run: 399
+    type: 'dataframe'
+    source-type: 'two-photon'
+    path: 'cs-ii-29_fish-B_run-399_size-and-loc-vs-region.pkl'
+
+  - name: 'cs-ii-29B_r399_stimulation-control-timecourses'
+    experiment: 'cs-ii-29'
+    fish-id: 'B'
+    run: 399
+    type: 'dataframe'
+    source-type: 'stimulation-control-log'
+    path: 'cs-ii-29_fish-B_run-399_stimulation-control-vs-time.pkl'
+
+  - name: 'cs-ii-29B_r399_stimulation-flow-sensor-timecourses'
+    experiment: 'cs-ii-29'
+    fish-id: 'B'
+    run: 399
+    type: 'dataframe'
+    source-type: 'stimulation-sensor-log'
+    path: 'cs-ii-29_fish-B_run-399_stimulation-flow-sensor-vs-time.pkl'
+
+  - name: 'cs-ii-29b_r399_fish-movement-timecourses'
+    experiment: 'cs-ii-29'
+    fish-id: 'B'
+    run: 399
+    type: 'dataframe'
+    source-type: 'behavioral-cam'
+    path: 'cs-ii-29_fish-B_run-399_tail-angle-and-bout-vs-time.pkl'
